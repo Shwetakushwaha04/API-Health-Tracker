@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>API Monitor - Login</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Login Card -->
+      <div class="add-section" id="loginCard">
+        <h1>API Monitor</h1>
+
+        <p class="subtitle">Login to your monitoring dashboard</p>
+
+        <h2>Login</h2>
+
+        <input type="text" id="loginUsername" placeholder="Username" />
+
+        <input type="password" id="loginPassword" placeholder="Password" />
+
+        <button id="loginButton">Login</button>
+
+        <p style="margin-top: 20px">
+          New user?
+          <button id="showRegisterButton">Register</button>
+        </p>
+      </div>
+
+      <!-- Register Card -->
+      <div class="add-section" id="registerCard" style="display: none">
+        <h1>API Monitor</h1>
+
+        <p class="subtitle">Create your account</p>
+
+        <h2>Register</h2>
+
+        <input type="text" id="registerUsername" placeholder="Username" />
+
+        <input type="password" id="registerPassword" placeholder="Password" />
+
+        <button id="registerButton">Register</button>
+
+        <p style="margin-top: 20px">
+          Already have an account?
+          <button id="showLoginButton">Login</button>
+        </p>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+
+    <script>
+      // Show register card
+      document
+        .getElementById("showRegisterButton")
+        .addEventListener("click", () => {
+          document.getElementById("loginCard").style.display = "none";
+
+          document.getElementById("registerCard").style.display = "block";
+        });
+
+      // Show login card
+      document
+        .getElementById("showLoginButton")
+        .addEventListener("click", () => {
+          document.getElementById("registerCard").style.display = "none";
+
+          document.getElementById("loginCard").style.display = "block";
+        });
+
+      // Login
+      document
+        .getElementById("loginButton")
+        .addEventListener("click", async () => {
+          const username = document.getElementById("loginUsername").value;
+
+          const password = document.getElementById("loginPassword").value;
+
+          await login(username, password);
+        });
+
+      // Register
+      document
+        .getElementById("registerButton")
+        .addEventListener("click", async () => {
+          const username = document.getElementById("registerUsername").value;
+
+          const password = document.getElementById("registerPassword").value;
+
+          const success = await register(username, password);
+
+          if (success) {
+            // Go back to login card
+            document.getElementById("registerCard").style.display = "none";
+
+            document.getElementById("loginCard").style.display = "block";
+
+            // Put registered username into login field
+            document.getElementById("loginUsername").value = username;
+
+            // Clear password
+            document.getElementById("loginPassword").value = "";
+          }
+        });
+    </script>
+  </body>
+</html>
