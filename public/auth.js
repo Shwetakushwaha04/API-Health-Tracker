@@ -5,26 +5,32 @@ function getToken() {
 
 // Get authorization headers
 function getAuthHeaders() {
-  const token = getToken();
+  return { Authorization: `Bearer ${getToken()}` };
+}
 
-  return {
-    Authorization: `Bearer ${token}`,
-  };
+// fetch() wrapper for logged-in requests.
+// If the token is missing or expired, send the user back to the login page.
+async function apiFetch(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: { ...getAuthHeaders(), ...(options.headers || {}) },
+  });
+
+  if (response.status === 401) {
+    localStorage.removeItem("token");
+    window.location.href = "/login.html";
+    throw new Error("Session expired");
+  }
+
+  return response;
 }
 
 // Login
 async function login(username, password) {
   const response = await fetch("/login", {
     method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-    },
-
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
   });
 
   const result = await response.json();
@@ -37,8 +43,6 @@ async function login(username, password) {
   // Save JWT
   localStorage.setItem("token", result.token);
 
-  alert("Login successful!");
-
   window.location.href = "/dashboard.html";
 
   return true;
@@ -48,15 +52,8 @@ async function login(username, password) {
 async function register(username, password) {
   const response = await fetch("/register", {
     method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-    },
-
-    body: JSON.stringify({
-      username: username,
-      password: password,
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
   });
 
   const result = await response.json();

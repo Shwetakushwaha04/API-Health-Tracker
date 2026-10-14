@@ -180,3 +180,27 @@ button:hover {
 #responseChart {
   max-height: 350px;
 }
+
+/* Small message at the bottom of the dashboard */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+#toast.visible {
+  opacity: 1;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

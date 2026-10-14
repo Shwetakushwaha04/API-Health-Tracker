@@ -12,7 +12,75 @@
 
   <body>
     <div class="container">
+      <<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Health Tracker</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
       <h1>API Health Tracker</h1>
+      <p class="subtitle">
+        Monitor your APIs and check their health in real time.
+      </p>
+      <button onclick="logout()">Logout</button>
+
+      <div class="stats">
+        <div class="card">
+          <h3>Total APIs</h3>
+          <p id="totalApis">0</p>
+        </div>
+
+        <div class="card">
+          <h3>Healthy</h3>
+          <p id="healthyApis">0</p>
+        </div>
+
+        <div class="card">
+          <h3>Down</h3>
+          <p id="downApis">0</p>
+        </div>
+      </div>
+
+      <div class="add-section">
+        <h2>Add API</h2>
+
+        <input type="text" id="apiName" placeholder="API Name" />
+
+        <input type="text" id="apiUrl" placeholder="API URL (https://...)" />
+
+        <button id="addButton">Add API</button>
+      </div>
+
+      <div class="chart-section">
+        <h2>Response Time History</h2>
+
+        <select id="chartApiSelect">
+          <option value="">Select an API</option>
+        </select>
+
+        <canvas id="responseChart"></canvas>
+      </div>
+
+      <h2>Monitored APIs</h2>
+
+      <div id="apiList"></div>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script src="responseChart.js"></script>
+  </body>
+</html>
+h1>API Health Tracker</h1>
       <p class="subtitle">
         Monitor your APIs and check their health in real time.
       </p>
